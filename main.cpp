@@ -60,10 +60,9 @@ void game_start(int stage) {
         case 2: gold_item();
     defalut:
         maze();
-        game_timer(stage);
+        start=clock(); //함수 위치가 다른곳인데도 실행이 되는지 확인
         playing = 1;
-    }
-
+}
 //팩맨의 생성
 int packman_create(int x, int y) {
     gotoxy(x, y);
@@ -140,12 +139,19 @@ int main() {
     int stage = 1;
     game_menu();
     bgm();
+    system("cls");// 게임메뉴 화면 안보이게
     game_story(1);
+    system("cls");//스토리 지워지게
     image_add();
+    sleep(2000); //사진을 2초동안 보여줌
+    system("cls");
     if (stage == 1) {
-        game_start(1);
+        game_start(1);//이 함수가 돌아가는동안 밑에 실행 안되나? 물어보기.
         ch_move(1);
         if (clear(1, playing)) {
+            system("cls"); //현재 있는 미로 삭제
+            end=clock();
+            game_timer(stage,start,end);
             stage++;
             game_story(2);
         }
@@ -154,11 +160,17 @@ int main() {
         game_start(2);
         ch_move(2);
         if (clear(2,playing)) {
+            system("cls");
             game_story(3);
-            rank();
-            clear_time();
-            if (나가기를 누른다면)
+            system("cls");
+            end=clock();
+            game_timer(stage,start,end); //파일에 저장도 포함
+            clear_time(); //클리어시간 보여주기
+            rank(); //파일에 있는 내용을 배열로 불러와 크기를 비교하여 3개 순위 출력하기(만약에 가능하다면 현재 자기 순위나 상위 몇%인지 표시(심화))
+            if (나가기를 누른다면){
+                system("cls");
                 game_menu();
+            }
         }
     }
 }
