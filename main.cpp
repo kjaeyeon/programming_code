@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <conio.h>
+#include <time.h>
+
 
 #define SIZE 10 //명예의 전당 크기
 #define ROW 32 //미로 크기
 #define COL 32
+#define Max_id_size 20
 
 int game_menu();
 void game_rule();
@@ -31,6 +35,7 @@ void clear_time();
 void rank();
 void gotoxy(int x, int y);
 
+clock_t start, end;  // 전역 변수로 선언
 int item_width, item_length;
 int p_x, p_y; //팩맨의 x좌표와 y좌표
 int g_x, g_y; //고스트의 x좌표와 y좌표
@@ -143,7 +148,7 @@ int main() {
     game_story(1);
     system("cls");//스토리 지워지게
     image_add();
-    sleep(2000); //사진을 2초동안 보여줌
+    Sleep(2000); //사진을 2초동안 보여줌
     system("cls");
     if (stage == 1) {
         game_start(1);//이 함수가 돌아가는동안 밑에 실행 안되나? 물어보기.
