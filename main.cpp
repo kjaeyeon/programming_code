@@ -171,6 +171,7 @@ int main() {
             end=clock();
             game_timer(stage,start,end); //파일에 저장도 포함
             clear_time(); //클리어시간 보여주기
+            sortStageClearTime(); //오름차순으로 시간 정렬
             rank(); //파일에 있는 내용을 배열로 불러와 크기를 비교하여 3개 순위 출력하기(만약에 가능하다면 현재 자기 순위나 상위 몇%인지 표시(심화))
             if (나가기를 누른다면){
                 system("cls");
@@ -231,4 +232,75 @@ void display(int x, int y) {
 void gotoxy(int x, int y) {
     COORD Pos = { x - 1, y - 1 };
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+// 오름차순 정렬을 위한 비교 함수
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void sortStageClearTime() {
+    int* stage_clear_time = NULL; // 스테이지 클리어 시간이 들어있는 배열
+    int size = 0;
+    int i;
+
+    // 파일 열기
+    FILE* file = fopen("stage_clear_time.txt", "r");
+    if (file == NULL) {
+        printf("파일을 열 수 없습니다.\n");
+        return;
+    }
+
+    // 파일에서 데이터 읽기
+    int num;
+    while (fscanf(file, "%d", &num) == 1) {
+        size++;
+        int* temp = (int*)realloc(stage_clear_time, size * sizeof(int));
+        if (temp == NULL) {
+            printf("메모리 할당 오류가 발생했습니다.\n");
+            fclose(file);
+            free(stage_clear_time);
+            return;
+        }
+        stage_clear_time = temp;
+        stage_clear_time[size - 1] = num;
+    }
+
+    // 파일 닫기
+    fclose(file);
+
+    if (size == 0) {
+        printf("데이터가 없습니다.\n");
+        free(stage_clear_time);
+        return;
+    }
+
+    // 배열 정렬
+    qsort(stage_clear_time, size, sizeof(int), compare);
+
+    // 파일 다시 쓰기
+    file = fopen("stage_clear_time.txt", "w");
+    if (file == NULL) {
+        printf("파일을 열 수 없습니다.\n");
+        free(stage_clear_time);
+        return;
+    }
+
+    // 정렬된 배열을 파일에 쓰기
+    for (i = 0; i < size; i++) {
+        if (fprintf(file, "%d\n", stage_clear_time[i]) < 0) {
+            printf("파일 쓰기 오류가 발생했습니다.\n");
+            fclose(file);
+            free(stage_clear_time);
+            return;
+        }
+    }
+
+    // 파일 닫기
+    fclose(file);
+
+    printf("파일이 정렬되었습니다.\n");
+
+    free(stage_clear_time);
+    
 }
