@@ -1,9 +1,11 @@
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
+#include <Windows.h>
 #include <conio.h>
 #include <time.h>
-
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 #define SIZE 10 //명예의 전당 크기
 #define ROW 32 //미로 크기
@@ -143,7 +145,10 @@ void ghost_remove(int x, int y) {
 int main() {
     int stage = 1;
     game_menu();
-    bgm();
+    PlaySound(TEXT("C:\\maze.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    //중간 게임실행 코드
+    PlaySound(NULL, NULL, SND_ASYNC);
+
     system("cls");// 게임메뉴 화면 안보이게
     game_story(1);
     system("cls");//스토리 지워지게
