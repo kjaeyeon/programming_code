@@ -239,9 +239,6 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-
 // 오름차순 정렬을 위한 비교 함수
 int compare(const void* a, const void* b) {
     return (*(int*)a - *(int*)b);
