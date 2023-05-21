@@ -134,7 +134,7 @@ void ghost_create(int x, int y) {
     printf("(호박)");
 }
 
-//팩맨 삭제
+//고스트 삭제
 void ghost_remove(int x, int y) {
     gotoxy(x, y);
     printf("\0");
