@@ -239,6 +239,9 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 }
 
+#include <stdio.h>
+#include <stdlib.h>
+
 // 오름차순 정렬을 위한 비교 함수
 int compare(const void* a, const void* b) {
     return (*(int*)a - *(int*)b);
@@ -283,29 +286,11 @@ void sortStageClearTime() {
     // 배열 정렬
     qsort(stage_clear_time, size, sizeof(int), compare);
 
-    // 파일 다시 쓰기
-    file = fopen("stage_clear_time.txt", "w");
-    if (file == NULL) {
-        printf("파일을 열 수 없습니다.\n");
-        free(stage_clear_time);
-        return;
+    //배열 상위 3개 출력하기
+    printf("순위\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%d\n", stage_clear_time[i]);
     }
-
-    // 정렬된 배열을 파일에 쓰기
-    for (i = 0; i < size; i++) {
-        if (fprintf(file, "%d\n", stage_clear_time[i]) < 0) {
-            printf("파일 쓰기 오류가 발생했습니다.\n");
-            fclose(file);
-            free(stage_clear_time);
-            return;
-        }
-    }
-
-    // 파일 닫기
-    fclose(file);
-
-    printf("파일이 정렬되었습니다.\n");
 
     free(stage_clear_time);
-    
 }
