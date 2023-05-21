@@ -83,7 +83,7 @@ void packman_remove(int x, int y) {
     printf("\0");
 }
 
-//팩맨의 움직임 + 고스트의 움직임
+//팩맨의 움직임 
 void ch_move(int stage) {
     int ghost_movement = 0; //스테이지가 넘어갈때 초기화
     int key;
