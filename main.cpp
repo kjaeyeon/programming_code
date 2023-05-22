@@ -161,7 +161,7 @@ int main() {
         if (clear(1, playing)) {
             system("cls"); //현재 있는 미로 삭제
             end=clock();
-            game_timer(stage,start,end);
+            game_timer(stage);
             stage++;
             game_story(2);
         }
@@ -174,7 +174,7 @@ int main() {
             game_story(3);
             system("cls");
             end=clock();
-            game_timer(stage,start,end); //파일에 저장도 포함
+            game_timer(stage); //파일에 저장도 포함
             clear_time(); //클리어시간 보여주기
             sortStageClearTime(); //오름차순으로 시간 정렬
             rank(); //파일에 있는 내용을 배열로 불러와 크기를 비교하여 3개 순위 출력하기(만약에 가능하다면 현재 자기 순위나 상위 몇%인지 표시(심화))
@@ -188,6 +188,53 @@ int main() {
 //게임 설명 화면
 void game_rule() {
     printf("고스트는 당신에게 제일 빠른길로 다가오고 있습니다.\n최대한 빨리 목적지를 향해 도망가세요!\n (황금열쇠)는 2스테이지에서 당신을 나가게 도와줄 것 입니다!");
+}
+// 타이머
+time_t start_time, end_time;  // 전역 변수로 선언
+
+void game_timer(int stage) {
+    double stage1_time = 0, stage2_time = 0;
+
+    switch (stage) {
+    case 1:
+        //(stage1)
+        start_time = time(NULL);
+        end_time = time(NULL);
+        stage1_time = difftime(end_time, start_time);
+        break;
+    case 2:
+        //(stage2)
+        start_time = time(NULL);
+        end_time = time(NULL);
+        stage2_time = difftime(end_time, start_time);
+        break;
+    default:
+        printf("유효하지 않은 스테이지입니다.\n");
+        return;
+    }
+
+    //(총 시간)
+    double total_time = stage1_time + stage2_time;
+    printf("총 시간: %.2f초\n", total_time);
+
+    // 사용자 아이디 입력 받기
+    char user_id[20];
+    printf("사용자 아이디를 입력하세요: ");
+    scanf_s("%s", &user_id);
+
+    // 파일에 총 시간 저장
+    FILE* fp = fopen("timer.txt", "w");
+    if (fp != NULL) {
+        fprintf(fp, "Total Time: %.2f초\n", total_time);
+        fclose(fp);
+    }
+    else {
+        printf("파일을 열 수 없습니다.\n");
+    }
+
+    // total_time을 보여주기 위해 사용자 입력 대기
+    printf("아무 키나 누르세요...\n");
+    while (getchar() != '\n') {}  // Enter 키까지 입력 대기
 }
 
 //게임 종료 조건
