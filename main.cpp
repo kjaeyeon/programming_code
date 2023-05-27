@@ -148,6 +148,99 @@ void ghost_remove(int x, int y) {
 }
 
 
+//게임 메뉴
+int game_menu() {
+    int stage = 1; //메뉴를 불러올때마다 1스테이지부터 시작
+    while (1) {
+        if ()//start를 누른다면
+            return 0; //메뉴나가기}
+        else if () //rule을 누른다면
+            game_rule(); //rule 불러오기
+        else if () //나가기를 누른다면
+            exit(1); //나가기
+    }
+}
+
+//게임 시작 화면
+void game_start(int stage) {
+    switch (stage) //입력받은 스테이지가 2라면 전부 실행, 1이면 defalut값만 실행
+        case 2: gold_item();
+    defalut:
+        maze();
+        start=clock(); //함수 위치가 다른곳인데도 실행이 되는지 확인
+        playing = 1;
+}
+//팩맨의 생성
+int packman_create(int x, int y) {
+    gotoxy(x, y);
+    printf("(팩맨)");
+    return 1;
+}
+
+//팩맨 삭제
+void packman_remove(int x, int y) {
+    gotoxy(x, y);
+    printf("\0");
+}
+
+//팩맨의 움직임 + 고스트의 움직임
+void ch_move(int stage) {
+    int ghost_movement = 0; //스테이지가 넘어갈때 초기화
+    int key;
+    while (playing==1){ //게임이 실행되는 동안에만 반복
+        scanf("%d", &key);
+        if (key == 77) { //입력한 키와 오른쪽 키의 아스키 코드가 같다면
+            if (check_block(p_x + 1, p_y)) //벽의 좌표와 자신의 좌표를 비교해 같다면
+                continue;
+            packman_remove(p_x, p_y);
+            gotoxy(p_x + 1, p_y); //오른쪽으로 한칸
+            packman_create(p_x, p_y);
+            ghost_movement++;
+        }
+
+        else if (key == 75) {
+            if (check_block(p_x - 1, p_y)) //벽의 좌표와 자신의 좌표를 비교해 같다면
+                continue;
+            packman_remove(p_x, p_y); //현재위치?
+            gotoxy(p_x - 1, p_y); //왼쪽으로 한칸
+            packman_create(p_x, p_y);
+            ghost_movement++;
+        }
+
+        else if (key == 72) {
+            if (check_block(p_x, p_y + 1)) //벽의 좌표와 자신의 좌표를 비교해 같다면
+                continue;
+            packman_remove(p_x, p_y);
+            gotoxy(p_x, p_y + 1); //오른쪽으로 한칸
+            packman_create(p_x, p_y);
+            ghost_movement++;
+        }
+        else if (key == 80) {
+            if (check_block(p_x, p_y - 1)) //벽의 좌표와 자신의 좌표를 비교해 같다면
+                continue;
+            packman_remove(p_x, p_y);
+            gotoxy(p_x, p_y - 1); //오른쪽으로 한칸
+            packman_create(p_x, p_y);
+            ghost_movement++;
+        }
+        if (ghost_movement % 3 == 0) //3번 증가하면 작동
+            팩맨이 있는 방향으로 1칸 움직이기; //아마 큐나 스택 사용
+    }
+}
+
+//고스트 생성
+void ghost_create(int x, int y) {
+    gotoxy(x, y);
+    printf("(호박)");
+}
+
+//팩맨 삭제
+void ghost_remove(int x, int y) {
+    gotoxy(x, y);
+    printf("\0");
+}
+
+
 //메인 함수
 int main() {
     int stage = 1;
@@ -184,7 +277,7 @@ int main() {
             game_timer(stage); //파일에 저장도 포함
             clear_time(); //클리어시간 보여주기
             sortStageClearTime(); //오름차순으로 시간 정렬
-            rank(); //파일에 있는 내용을 배열로 불러와 크기를 비교하여 3개 순위 출력하기(만약에 가능하다면 현재 자기 순위나 상위 몇%인지 표시(심화))
+            Ranking_table();
             if (나가기를 누른다면){
                 system("cls");
                 game_menu();
