@@ -41,6 +41,7 @@ void rank();
 void gotoxy(int x, int y);
 void setConsoleColor(int colorCode);
 void showAndHideText(char* text);
+void Ranking_table();
 
 clock_t start, end;  // 전역 변수로 선언
 int item_width, item_length;
