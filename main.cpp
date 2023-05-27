@@ -39,6 +39,8 @@ void display(int x, int y);
 void clear_time();
 void rank();
 void gotoxy(int x, int y);
+void setConsoleColor(int colorCode);
+void showAndHideText(char* text);
 
 clock_t start, end;  // 전역 변수로 선언
 int item_width, item_length;
@@ -50,6 +52,7 @@ int playing;
 int maze_str[ROW][COL]; //maze라는 함수가 있어서 이름 변경
 int d_x,d_y; //목적지 위치 destination_x 여기다가 랜덤생성된 좌표를 입력해주세요
 int key_inven; //열쇠 먹으면 이 변수 1로 해주세요
+int t_x = 33, t_y = 33; //텍스트의 x좌표와 y좌표(미정)
 
 //게임 메뉴
 int game_menu() {
