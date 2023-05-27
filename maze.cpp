@@ -57,7 +57,7 @@ void print_maze() {
     }
 }
 
-int main() {
+int main_maze() {
     srand(time(NULL)); // 난수 생성기 초기화
 
     // 모든 셀을 벽으로 초기화
