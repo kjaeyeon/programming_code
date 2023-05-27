@@ -77,17 +77,18 @@ void game_timer(int stage) {
 
     //(총 시간)
     double total_time = stage1_time + stage2_time;
-    printf("총 시간: %.2f초\n", total_time);
+    printf("%.2f\n", total_time);
 
     // 사용자 아이디 입력 받기
     char user_id[20];
     printf("사용자 아이디를 입력하세요: ");
-    scanf_s("%s", &user_id);
+    scanf("%s", user_id);
 
     // 파일에 총 시간 저장
     FILE* fp = fopen("timer.txt", "w");
     if (fp != NULL) {
-        fprintf(fp, "Total Time: %.2f초\n", total_time);
+        fprintf(fp, "%s\n", user_id);
+        fprintf(fp, "%.2f\n", total_time);
         fclose(fp);
     }
     else {
