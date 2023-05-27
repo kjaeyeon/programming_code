@@ -6,7 +6,7 @@
 
 int maze[SIZE][SIZE];
 
-// 범위 확인
+// 움직일 수 있는 범위 확인
 int is_valid(int x, int y) {
     return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 }
@@ -57,7 +57,7 @@ void print_maze() {
     }
 }
 
-int main() {
+int main_maze() {
     srand(time(NULL)); // 난수 생성기 초기화
 
     // 모든 셀을 벽으로 초기화

@@ -35,6 +35,7 @@ void rank();
 void gotoxy(int x, int y);
 void setConsoleColor(int colorCode);
 void showAndHideText(char* text);
+void main_maze();
 
 clock_t start, end;  // 전역 변수로 선언
 int item_width, item_length;
@@ -104,7 +105,7 @@ void game_start(int stage) {
     switch (stage) //입력받은 스테이지가 2라면 전부 실행, 1이면 defalut값만 실행
         case 2: gold_item();
 defalut:
-    maze();
+    main_maze();
     start = clock(); //함수 위치가 다른곳인데도 실행이 되는지 확인
     playing = 1;
 }
