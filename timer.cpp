@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <windows.h>
 #include <conio.h>
 #include <time.h>
 
+#define MAX_NAME_LENGTH 50
+#define MAX_ENTRIES 100
 #define SIZE 10 //명예의 전당 크기
 #define ROW 32 //미로 크기
 #define COL 32
@@ -96,55 +99,94 @@ void game_timer(int stage) {
     while (getchar() != '\n') {}  // Enter 키까지 입력 대기
 }
 
-// 오름차순 정렬을 위한 비교 함수
-int compare(const void* a, const void* b) {
-    return (*(int*)a - *(int*)b);
-}
 
-void sortStageClearTime() {
-    int* stage_clear_time = NULL; // 스테이지 클리어 시간이 들어있는 배열
-    int size = 0;
-    int i;
-
-    // 파일 열기
-    FILE* file = fopen("stage_clear_time.txt", "r");
+//게임 클리어 후 닉네임과 걸린 시간 출력
+void Print_timer() {
+    FILE* file = fopen("timer.txt", "r");
     if (file == NULL) {
         printf("파일을 열 수 없습니다.\n");
         return;
     }
 
-    // 파일에서 데이터 읽기
-    int num;
-    while (fscanf(file, "%d", &num) == 1) {
-        size++;
-        int* temp = (int*)realloc(stage_clear_time, size * sizeof(int));
-        if (temp == NULL) {
-            printf("메모리 할당 오류가 발생했습니다.\n");
-            fclose(file);
-            free(stage_clear_time);
-            return;
+    char recentName[MAX_NAME_LENGTH];
+    int recentTime = 0;
+
+    char name[MAX_NAME_LENGTH];
+    int time;
+
+    // timer.txt 파일에서 가장 최근에 입력된 홀수 줄의 닉네임과 짝수 줄의 시간 찾기
+    while (fgets(name, sizeof(name), file) != NULL) {
+        if (fgets(name, sizeof(name), file) != NULL) {
+            strncpy(recentName, name, sizeof(recentName)); // 홀수 줄의 닉네임 저장
+            fgets(name, sizeof(name), file); // 짝수 줄로 이동
+            sscanf(name, "%d", &recentTime); // 짝수 줄의 시간 저장
         }
-        stage_clear_time = temp;
-        stage_clear_time[size - 1] = num;
     }
 
-    // 파일 닫기
     fclose(file);
 
-    if (size == 0) {
-        printf("데이터가 없습니다.\n");
-        free(stage_clear_time);
+    // 초를 분 단위로 변환하여 출력
+    int minutes = recentTime / 60; // 분 계산
+    int seconds = recentTime % 60; // 초 계산
+
+    printf("닉네임: %s", recentName);
+    printf("클리어 시간: %d분 %d초\n", minutes, seconds);
+}
+
+
+//순위표 오름차순 정렬 후 1~3위 출력
+typedef struct {
+    char name[MAX_NAME_LENGTH];
+    int time;
+} PlayerData;
+
+// 비교 함수
+int compare(const void* a, const void* b) {
+    const PlayerData* playerA = (const PlayerData*)a;
+    const PlayerData* playerB = (const PlayerData*)b;
+
+    return playerA->time - playerB->time;
+}
+
+void Ranking_table() {
+    FILE* file = fopen("timer.txt", "r");
+    if (file == NULL) {
+        printf("파일을 열 수 없습니다.\n");
         return;
     }
 
-    // 배열 정렬
-    qsort(stage_clear_time, size, sizeof(int), compare);
+    PlayerData players[MAX_ENTRIES];
+    int numEntries = 0;
 
-    //배열 상위 3개 출력하기
-    printf("순위\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%d\n", stage_clear_time[i]);
+    char line[MAX_NAME_LENGTH + 10];
+    char name[MAX_NAME_LENGTH];
+    int time;
+
+    while (fgets(line, sizeof(line), file) != NULL) {
+        sscanf(line, "%s", name);
+        if (fgets(line, sizeof(line), file) != NULL) {
+            sscanf(line, "%d", &time);
+            strncpy(players[numEntries].name, name, MAX_NAME_LENGTH);
+            players[numEntries].time = time;
+            numEntries++;
+        }
+
+        if (numEntries >= MAX_ENTRIES) {
+            printf("최대 엔트리 수를 초과했습니다.\n");
+            break;
+        }
     }
 
-    free(stage_clear_time);
+    fclose(file);
+
+    qsort(players, numEntries, sizeof(PlayerData), compare);
+
+    int numPrinted = 0;
+    for (int i = 0; i < numEntries && numPrinted < 3; i++) {
+        int minutes = players[i].time / 60; // 초를 분으로 변환
+        int seconds = players[i].time % 60; // 초 단위 계산
+
+        printf("%d위 => 닉네임: %s, 시간: %d분 %d초\n", numPrinted + 1, players[i].name, minutes, seconds);
+        numPrinted++;
+    }
 }
