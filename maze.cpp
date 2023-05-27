@@ -6,7 +6,7 @@
 
 int maze[SIZE][SIZE];
 
-// 범위 확인
+// 움직일 수 있는 범위 확인
 int is_valid(int x, int y) {
     return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 }
