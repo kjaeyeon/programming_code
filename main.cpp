@@ -75,6 +75,30 @@ void game_start(int stage) {
         start=clock(); //함수 위치가 다른곳인데도 실행이 되는지 확인
         playing = 1;
 }
+
+//공포이미지 추가
+void image_add() {
+    system("cls"); //
+
+    FILE* file;
+    char ch;
+
+    file = fopen("horror.txt", "r"); // 그림을 저장한 텍스트 파일을 연다
+
+    if (file == NULL) {
+        printf("파일을 열 수 없습니다.");
+        return;
+    }
+    while ((ch = fgetc(file)) != EOF) { // 파일 내용을 한 줄씩 읽어서 출력
+        printf("%c", ch);
+    }
+
+    fclose(file);
+    Sleep(5000); // 그림을 5초 보여줌
+
+    system("cls"); // 터미널청소
+}
+
 //팩맨의 생성
 int packman_create(int x, int y) {
     gotoxy(x, y);
@@ -250,9 +274,12 @@ int main() {
     system("cls");// 게임메뉴 화면 안보이게
     game_story(1);
     system("cls");//스토리 지워지게
+    
+    //공포이미지 출력
+    printf("게임시작");
+    getchar();
     image_add();
-    Sleep(2000); //사진을 2초동안 보여줌
-    system("cls");
+
     if (stage == 1) {
         game_start(1);//이 함수가 돌아가는동안 밑에 실행 안되나? 물어보기.
         ch_move(1);
@@ -282,6 +309,7 @@ int main() {
             }
         }
     }
+return 0;
 }
 //게임 설명 화면
 void game_rule() {
