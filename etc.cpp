@@ -185,7 +185,6 @@ void display(int x, int y) {
         }
         printf("\n"); // 한 줄 출력 후 개행
     }
-}
 
 void showAndHideText(char* text) { //보여주고 사라지는 텍스트
     gotoxy(t_x, t_y);
