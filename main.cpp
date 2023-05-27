@@ -158,9 +158,12 @@ int main() {
     system("cls");// 게임메뉴 화면 안보이게
     game_story(1);
     system("cls");//스토리 지워지게
+    
+    //공포이미지 출력
+    printf("게임시작");
+    getchar();
     image_add();
-    Sleep(2000); //사진을 2초동안 보여줌
-    system("cls");
+
     if (stage == 1) {
         game_start(1);//이 함수가 돌아가는동안 밑에 실행 안되나? 물어보기.
         ch_move(1);
@@ -190,6 +193,7 @@ int main() {
             }
         }
     }
+return 0;
 }
 //게임 설명 화면
 void game_rule() {
