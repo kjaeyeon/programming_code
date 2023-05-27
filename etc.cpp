@@ -149,8 +149,8 @@ void display(int x, int y) {
                 if (i == x && j == y) {
                     printf("@"); //현재 위치 임의
                 }
-                else if (maze_str[i][j] == WALL) { //벽이랑 만났을때를 어떻게 해야할 지 모르겠음
-                    printf("■"); //벽
+                // else if (maze_str[i][j] == WALL) { //벽이랑 만났을때를 어떻게 해야할 지 모르겠음
+                //     printf("■"); //벽
                 }
                 else { // 길은 공백으로 표시
                     printf(" ");
