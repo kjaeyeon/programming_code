@@ -50,6 +50,7 @@ int maze_str[ROW][COL]; //maze라는 함수가 있어서 이름 변경
 int d_x,d_y; //목적지 위치 destination_x 여기다가 랜덤생성된 좌표를 입력해주세요
 int key_inven; //열쇠 먹으면 이 변수 1로 해주세요
 int t_x = 33, t_y = 33; //텍스트의 x좌표와 y좌표(미정)
+int choice;
 
 //메인 함수
 int main() {
@@ -88,7 +89,9 @@ int main() {
             clear_time(); //클리어시간 보여주기
             sortStageClearTime(); //오름차순으로 시간 정렬
             rank(); //파일에 있는 내용을 배열로 불러와 크기를 비교하여 3개 순위 출력하기(만약에 가능하다면 현재 자기 순위나 상위 몇%인지 표시(심화))
-            if (나가기를 누른다면){
+            printf("나가고 싶으시면 e를 눌러주세요");
+            scanf("%c",&choice);
+            if (choice=='e'||choice=='E'){
                 system("cls");
                 game_menu();
             }
