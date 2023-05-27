@@ -36,6 +36,8 @@ void display(int x, int y);
 void clear_time();
 void rank();
 void gotoxy(int x, int y);
+void setConsoleColor(int colorCode);
+void showAndHideText(char* text);
 
 clock_t start, end;  // 전역 변수로 선언
 int item_width, item_length;
@@ -83,7 +85,7 @@ void packman_remove(int x, int y) {
     printf("\0");
 }
 
-//팩맨의 움직임 
+//팩맨의 움직임 + 고스트의 움직임
 void ch_move(int stage) {
     int ghost_movement = 0; //스테이지가 넘어갈때 초기화
     int key;
@@ -134,7 +136,7 @@ void ghost_create(int x, int y) {
     printf("(호박)");
 }
 
-//고스트 삭제
+//팩맨 삭제
 void ghost_remove(int x, int y) {
     gotoxy(x, y);
     printf("\0");
@@ -184,157 +186,4 @@ int main() {
             }
         }
     }
-}
-//게임 설명 화면
-void game_rule() {
-    printf("고스트는 당신에게 제일 빠른길로 다가오고 있습니다.\n최대한 빨리 목적지를 향해 도망가세요!\n (황금열쇠)는 2스테이지에서 당신을 나가게 도와줄 것 입니다!");
-}
-// 타이머
-time_t start_time, end_time;  // 전역 변수로 선언
-
-void game_timer(int stage) {
-    double stage1_time = 0, stage2_time = 0;
-
-    switch (stage) {
-    case 1:
-        //(stage1)
-        start_time = time(NULL);
-        end_time = time(NULL);
-        stage1_time = difftime(end_time, start_time);
-        break;
-    case 2:
-        //(stage2)
-        start_time = time(NULL);
-        end_time = time(NULL);
-        stage2_time = difftime(end_time, start_time);
-        break;
-    default:
-        printf("유효하지 않은 스테이지입니다.\n");
-        return;
-    }
-
-    //(총 시간)
-    double total_time = stage1_time + stage2_time;
-    printf("총 시간: %.2f초\n", total_time);
-
-    // 사용자 아이디 입력 받기
-    char user_id[20];
-    printf("사용자 아이디를 입력하세요: ");
-    scanf_s("%s", &user_id);
-
-    // 파일에 총 시간 저장
-    FILE* fp = fopen("timer.txt", "w");
-    if (fp != NULL) {
-        fprintf(fp, "Total Time: %.2f초\n", total_time);
-        fclose(fp);
-    }
-    else {
-        printf("파일을 열 수 없습니다.\n");
-    }
-
-    // total_time을 보여주기 위해 사용자 입력 대기
-    printf("아무 키나 누르세요...\n");
-    while (getchar() != '\n') {}  // Enter 키까지 입력 대기
-}
-
-//게임 종료 조건
-bool clear(int stage,int playing) {
-    playing = 0;
-    switch (stage) {
-    case 1:
-        if (p_x==g_x && p_y==g_y) { //팩맨과 고스트의 위치가 같아진다면
-            printf("탈출 실패");
-            game_menu();
-        }
-        else if (p_x == d_x && p_y == d_y) //팩맨과 목적지의 위치가 같다면
-            return 1;
-        break;
-    case 2:
-        if (p_x == g_x && p_y == g_y) { //팩맨과 고스트의 위치가 같다면
-            printf("탈출 실패");
-            game_menu();
-        }
-        else if (p_x == d_x && p_y == d_y)
-            if (key_inven==1 ) //열쇠를 가지고 있는 변수를 만들어서 가지면 1, 없으면 0
-                return 1;
-            else
-                printf("열쇠를 가지고 와야 나갈 수 있다.");
-        return 0;
-    }
-}
-//시야 제한 ->코딩 후 문제점이 발생하면 그래픽 함수 사용
-void display(int x, int y) {
-    for (int i = x - 2; i <= x + 2; i++) {
-        for (int j = y - 2; j <= y + 2; j++) {
-            if (i >= 0 && i < ROW && j >= 0 && j < COL) { // 미로 범위 내에서만 출력
-                if (i == x && j == y) {
-                    printf("@"); //현재 위치 임의
-                }
-                else if (maze_str[i][j] == WALL) { //벽이랑 만났을때를 어떻게 해야할 지 모르겠음
-                    printf("■"); //벽
-                }
-                else { // 길은 공백으로 표시
-                    printf(" ");
-                }
-            }
-        }
-        printf("\n"); // 한 줄 출력 후 개행
-    }
-}
-void gotoxy(int x, int y) {
-    COORD Pos = { x - 1, y - 1 };
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
-}
-
-// 오름차순 정렬을 위한 비교 함수
-int compare(const void* a, const void* b) {
-    return (*(int*)a - *(int*)b);
-}
-
-void sortStageClearTime() {
-    int* stage_clear_time = NULL; // 스테이지 클리어 시간이 들어있는 배열
-    int size = 0;
-    int i;
-
-    // 파일 열기
-    FILE* file = fopen("stage_clear_time.txt", "r");
-    if (file == NULL) {
-        printf("파일을 열 수 없습니다.\n");
-        return;
-    }
-
-    // 파일에서 데이터 읽기
-    int num;
-    while (fscanf(file, "%d", &num) == 1) {
-        size++;
-        int* temp = (int*)realloc(stage_clear_time, size * sizeof(int));
-        if (temp == NULL) {
-            printf("메모리 할당 오류가 발생했습니다.\n");
-            fclose(file);
-            free(stage_clear_time);
-            return;
-        }
-        stage_clear_time = temp;
-        stage_clear_time[size - 1] = num;
-    }
-
-    // 파일 닫기
-    fclose(file);
-
-    if (size == 0) {
-        printf("데이터가 없습니다.\n");
-        free(stage_clear_time);
-        return;
-    }
-
-    // 배열 정렬
-    qsort(stage_clear_time, size, sizeof(int), compare);
-
-    //배열 상위 3개 출력하기
-    printf("순위\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%d\n", stage_clear_time[i]);
-    }
-
-    free(stage_clear_time);
 }
