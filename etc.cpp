@@ -110,6 +110,31 @@ defalut:
     playing = 1;
 }
 
+//공포 이미지 추가
+void image_add() {
+    system("cls"); //
+
+    FILE* file;
+    char ch;
+
+    // 그림을 저장한 텍스트 파일을 연다
+    file = fopen("horror.txt", "r");
+
+    if (file == NULL) {
+        printf("파일을 열 수 없습니다.");
+        return;
+    }
+
+    // 파일 내용을 한 줄씩 읽어서 출력
+    while ((ch = fgetc(file)) != EOF) {
+        printf("%c", ch);
+    }
+
+    fclose(file);
+    Sleep(5000); // 그림을 보여줌
+
+    system("cls"); // 터미널을 청소
+}
 
 
 //게임 설명 화면
@@ -166,7 +191,6 @@ void display(int x, int y) {
         }
         printf("\n"); // 한 줄 출력 후 개행
     }
-}
 
 void showAndHideText(char* text) { //보여주고 사라지는 텍스트
     gotoxy(t_x, t_y);
