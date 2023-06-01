@@ -12,7 +12,7 @@
 int game_menu();
 void game_rule();
 void game_start(int stage);
-void game_story(int story);
+void game_story(int );
 void game_timer(int stage);
 int packman_create(int x, int y);
 void packman_remove(int x, int y);
@@ -143,10 +143,76 @@ void game_rule() {
 }
 
 //게임 스토리
-void game_story()
+void game_story(int stage)
 {
-	printf("할로윈 파티를 초대받아 대저택에 갔더니 귀신들만 있는 곳이었다. 귀신을 피해 미로를 통과하여 대저택을 탈출해라!");
-}
+    switch(stage){
+        case 1:
+        printf("...\n");
+        Sleep(2000);
+        printf("(바닥에 떨어진 전단지를 발견한다)\n");
+        Sleep(1000);
+        printf("[할로윈 기념 파티에 당신을 초대합니다!]\n");
+        printf("[진정한 귀신들만이 올 수 있는 특별한 파티]\n");
+        printf("[한껏 꾸미고 아름다운 모습을 기대하겠습니다]\n");
+        printf("[위치: @@시@@동 @@#$ 저택 지하 1층]\n");
+        Sleep(1000);
+        printf("(흥미가 생긴 주인공은 가기로 결정한다.)\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("귀신분장을 하고 도착한 주인공은 대저택 정문 앞에서\n ");
+        printf("마찬가지로 귀신 분장을 한 사람에게 안내를 받아 파티장에 도착하였다.\n");
+        Sleep(1000);
+        printf("생각보다 많은 인원에 놀란 한편 주인공은 이상한 점을 발견한다.\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("기괴할 정도로 조용하고 스산한 분위기\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("그리고 흐린 발끝\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("주인공은 상황을 인지하지 못하다가 한 호박 귀신이 쫓아오는 것을 발견하곤 곧바로 자신이 왔던 문으로 뛰어간다.\n");
+        break;
+        case 2:
+        printf("미로에서 도망치다 보니 계단이 보인다.\n");
+        printf("지상으로 올라가는 길\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("주인공은 힘차게 올라갔지만 다시 보이는 미로에 암담하다...\n");
+        Sleep(1000);
+        printf("2 Stage Start\n");
+        printf("(열쇠를 찾아야 탈출구로 나갈 수 있습니다!)\n");
+        printf("계속하려면 아무키나 누르세요...");
+        getch();
+        break;
+        case 3:
+        printf("열쇠로 급히 문을 열고 드디어 밖으로 나온 주인공\n");
+        Sleep(1000);
+        printf("밖은 이미 어두워졌고 문 옆엔 아까 자신을 안내해준 귀신을 발견하였다.\n");
+        Sleep(1000);
+        printf("무표정한 얼굴로 다가오는 그들을 따돌리며 황급히 자신의 집으로 도망간다.\n");
+        Sleep(1000);
+        printf("다행히 어느 순간부터 그들은 따라오지 않고 노려보기만 하였고,\n");
+        Sleep(1000);
+        printf("나중에 경찰에 신고하고 찾아간 그곳에는 아무것도 찾을 수 없었다...\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("...\n");
+        Sleep(1000);
+        printf("!축하합니다!\n");
+        printf("모든 스테이지를 클리어하셨습니다!\n");
+    }
+	}
 
 //게임 종료 조건
 bool clear(int stage, int playing) {
