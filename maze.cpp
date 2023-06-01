@@ -67,7 +67,7 @@ void print_maze(int destX, int destY, int playerX, int playerY, int enemyX, int 
     }
 }
 
-int main() {
+int maze_main() {
     srand((unsigned int)time(NULL)); // 난수 생성기 초기화
     int destX, destY;
     int playerX = 1, playerY = 1; // 플레이어의 초기 위치 (1, 1)
