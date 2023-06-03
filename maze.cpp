@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
-#define SIZE 25 // 미로의 크기
+#define SIZE 27 // 미로의 크기
 
 int maze[SIZE][SIZE];
 
-// 움직일 수 있는 범위 확인
+// 범위 확인
 int is_valid(int x, int y) {
     return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 }
@@ -43,11 +44,20 @@ void generate_maze(int x, int y) {
 }
 
 // 생성된 미로 출력
-void print_maze() {
+void print_maze(int destX, int destY, int playerX, int playerY, int enemyX, int enemyY) {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             if (maze[i][j] == 1) {
                 printf("■"); // 벽 출력
+            }
+            else if (i == destX && j == destY) {
+                printf("★"); // 목적지 출력
+            }
+            else if (i == playerX && j == playerY) {
+                printf("●"); // 플레이어 출력
+            }
+            else if (i == enemyX && j == enemyY) {
+                printf("Θ"); // 적 출력
             }
             else {
                 printf("  "); // 통로 출력
@@ -57,8 +67,10 @@ void print_maze() {
     }
 }
 
-int main_maze() {
-    srand(time(NULL)); // 난수 생성기 초기화
+int maze_main() {
+    srand((unsigned int)time(NULL)); // 난수 생성기 초기화
+    int destX, destY;
+    int playerX = 1, playerY = 1; // 플레이어의 초기 위치 (1, 1)
 
     // 모든 셀을 벽으로 초기화
     for (int i = 0; i < SIZE; i++) {
@@ -68,7 +80,37 @@ int main_maze() {
     }
 
     generate_maze(1, 1); // (1, 1)에서 미로 생성 시작
-    print_maze(); // 생성된 미로 출력
+
+    // 랜덤으로 목적지 정하기 (길 있는 곳에 목적지 생성하지 않도록 함)
+    do {
+        destX = rand() % (SIZE - 2) + 1; // 범위: 1 ~ SIZE-2
+        destY = rand() % (SIZE - 2) + 1; // 범위: 1 ~ SIZE-2
+    } while (maze[destX][destY] == 1);
+
+    // 플레이어와 목적지의 거리 계산
+    double playerToDest = sqrt(pow(destX - playerX, 2) + pow(destY - playerY, 2));
+
+    // 적의 초기 위치 설정 (최대한 먼 곳에 생성)
+    int enemyX, enemyY;
+    double maxDistance = -1;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (maze[i][j] == 0) {
+                double distance = sqrt(pow(i - playerX, 2) + pow(j - playerY, 2));
+                if (distance > playerToDest && distance > maxDistance) {
+                    maxDistance = distance;
+                    enemyX = i;
+                    enemyY = j;
+                }
+            }
+        }
+    }
+
+    // 플레이어와 목적지 위치 설정
+    maze[playerX][playerY] = 2; // 플레이어
+    maze[destX][destY] = 0;    // 통로
+
+    print_maze(destX, destY, playerX, playerY, enemyX, enemyY); // 생성된 미로와 목적지 출력
 
     return 0;
 }
