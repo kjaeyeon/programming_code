@@ -283,3 +283,8 @@ void setConsoleColor(int colorCode) { //글씨의 색깔을 바꾸는 함수
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, colorCode);
 }
+
+// 주어진 좌표의 셀이 벽인지 아닌지 확인 (블록체크)
+int is_block(int x, int y) {
+    return maze[x][y] == 1;
+}
