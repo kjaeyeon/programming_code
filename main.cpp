@@ -29,7 +29,7 @@ void create_maze();
 void maze_set();
 void print_maze();
 int check_block(int x,int y); //좌표를 입력받고 그걸로 확인 (임의)
-bool clear(int stage, int playing);
+bool clear(int stage);
 void choose_random_location(int* width, int* length);
 void gold_item();
 int bgm();
@@ -58,6 +58,7 @@ int choice;
 
 //메인 함수
 int main() {
+    while(1){
     int stage = 1;
     game_menu();
     PlaySound(TEXT("C:\\maze.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
@@ -72,22 +73,28 @@ int main() {
     printf("게임시작");
     getchar();
     image_add();
+    while(1){
 
     if (stage == 1) {
         game_start(1);//이 함수가 돌아가는동안 밑에 실행 안되나? 물어보기.
+        while(1){
         ch_move(1);
-        if (clear(1, playing)) {
+        if (clear(1)) {
             system("cls"); //현재 있는 미로 삭제
             end=clock();
             game_timer(stage);
             stage++;
             game_story(2);
+            break;
+        }
         }
     }
     if (stage == 2) {
         game_start(2);
+        ghost_movement=0;
+        while(1){
         ch_move(2);
-        if (clear(2,playing)) {
+        if (clear(2)) {
             system("cls");
             game_story(3);
             system("cls");
@@ -101,9 +108,12 @@ int main() {
                 printf("3초후 메인화면으로 돌아갑니다.");
                 Sleep(3000);
                 system("cls");
-                game_menu();
+                break;
             }
         }
+    }
+    }
+    }
     }
 return 0;
 }
