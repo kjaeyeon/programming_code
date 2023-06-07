@@ -19,7 +19,7 @@ void game_story(int story);
 void game_timer(int stage);
 int packman_create(int x, int y);
 void packman_remove(int x, int y);
-void ch_move(int stage);
+int ch_move(int stage);
 void ghost_create(int x, int y);
 void ghost_remove(int x, int y);
 void maze();
@@ -27,7 +27,7 @@ void create_maze();
 void maze_set();
 void print_maze();
 int check_block(int x, int y); //좌표를 입력받고 그걸로 확인 (임의)
-bool clear(int stage, int playing);
+bool clear(int stage);
 void choose_random_location(int* width, int* length);
 void gold_item();
 int bgm();

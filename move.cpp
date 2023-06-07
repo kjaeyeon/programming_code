@@ -16,7 +16,7 @@ void game_story(int story);
 void game_timer(int stage);
 int packman_create(int x, int y);
 void packman_remove(int x, int y);
-void ch_move(int stage);
+int ch_move(int stage);
 void ghost_create(int x, int y);
 void ghost_remove(int x, int y);
 void maze();
@@ -62,16 +62,16 @@ void packman_remove(int x, int y) {
 }
 
 //팩맨의 움직임 + 고스트의 움직임
-void ch_move(int stage) {
-    int ghost_movement = 0; //스테이지가 넘어갈때 초기화
+int ch_move(int stage) {
+     //스테이지가 넘어갈때 초기화
     int key;
-    while (playing == 1) { //게임이 실행되는 동안에만 반복
+     //게임이 실행되는 동안에만 반복
         scanf("%d", &key);
         if (key == 77) { //입력한 키와 오른쪽 키의 아스키 코드가 같다면
             if (check_block(p_x + 1, p_y)) //벽의 좌표와 자신의 좌표를 비교해 같다면
             {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
-                continue;
+                return 0;
             }
             packman_remove(p_x, p_y); //원래자리에 있던 팩맨 삭제
             gotoxy(p_x + 1, p_y); //오른쪽으로 한칸
@@ -82,7 +82,7 @@ void ch_move(int stage) {
         else if (key == 75) {
             if (check_block(p_x - 1, p_y)) {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
-                continue;
+                return 0;
             }
             packman_remove(p_x, p_y); //현재위치?
             gotoxy(p_x - 1, p_y); //왼쪽으로 한칸
@@ -93,7 +93,7 @@ void ch_move(int stage) {
         else if (key == 72) {
             if (check_block(p_x, p_y + 1)) {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
-                continue;
+                return 0;
             }
             packman_remove(p_x, p_y);
             gotoxy(p_x, p_y + 1); //오른쪽으로 한칸
@@ -103,7 +103,7 @@ void ch_move(int stage) {
         else if (key == 80) {
             if (check_block(p_x, p_y - 1)) {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
-                continue;
+                return 0;
             }
             packman_remove(p_x, p_y);
             gotoxy(p_x, p_y - 1); //오른쪽으로 한칸
@@ -111,8 +111,8 @@ void ch_move(int stage) {
             ghost_movement++;
         }
         if (ghost_movement % 3 == 0) //3번 증가하면 작동
-            팩맨이 있는 방향으로 1칸 움직이기; //아마 큐나 스택 사용
-    }
+             //아마 큐나 스택 사용
+    
 }
 
 //고스트 생성
