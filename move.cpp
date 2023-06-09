@@ -79,7 +79,7 @@ int ch_move(int stage) {
             ghost_movement++;
         }
 
-        else if (key == 75) {
+        else if (key == 75) {//왼쪽
             if (check_block(p_x - 1, p_y)) {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
                 return 0;
@@ -90,7 +90,7 @@ int ch_move(int stage) {
             ghost_movement++;
         }
 
-        else if (key == 72) {
+        else if (key == 72) {//위쪽
             if (check_block(p_x, p_y + 1)) {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
                 return 0;
@@ -100,7 +100,7 @@ int ch_move(int stage) {
             packman_create(p_x, p_y);
             ghost_movement++;
         }
-        else if (key == 80) {
+        else if (key == 80) {//아래
             if (check_block(p_x, p_y - 1)) {
                 showAndHideText("벽이 있는 방향으로는 움직일 수 없다.");
                 return 0;
@@ -111,8 +111,8 @@ int ch_move(int stage) {
             ghost_movement++;
         }
         if (ghost_movement % 3 == 0) //3번 증가하면 작동
-             //아마 큐나 스택 사용
-    
+             
+    return 0;
 }
 
 //고스트 생성

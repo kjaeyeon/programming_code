@@ -119,7 +119,7 @@ void Print_timer() {
     while (fgets(name, sizeof(name), file) != NULL) {
         if (fgets(name, sizeof(name), file) != NULL) {
             strncpy(recentName, name, sizeof(recentName)); // 홀수 줄의 닉네임 저장
-            fgets(name, sisszeof(name), file); // 짝수 줄로 이동
+            fgets(name, sizeof(name), file); // 짝수 줄로 이동
             sscanf(name, "%d", &recentTime); // 짝수 줄의 시간 저장
         }
     }

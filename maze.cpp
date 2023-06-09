@@ -68,7 +68,7 @@ void print_maze(int destX, int destY, int playerX, int playerY, int enemyX, int 
 }
 
 // 주어진 좌표의 셀이 벽인지 아닌지 확인 (블록체크)
-int is_block(int x, int y) {
+int check_block(int x, int y) {
     return maze[x][y] == 1;
 }
 
