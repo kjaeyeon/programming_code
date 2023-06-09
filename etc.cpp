@@ -29,7 +29,6 @@ void choose_random_location(int* width, int* length);
 void gold_item();
 int bgm();
 void image_add();
-void display(int x, int y);
 void clear_time();
 void rank();
 void gotoxy(int x, int y);
@@ -54,45 +53,21 @@ int game_menu() {
     int stage = 1; //메뉴를 불러올때마다 1스테이지부터 시작
     char choice;
     while (1) {
-        printf("============================================\n");
-        printf("▄▄▄█████▓ ██▀███   ██▓ ▄████▄   ██ ▄█▀    ▒█████   ██▀███      ███▄ ▄███▓ █    ██ ▓█████▄ ▓█████  ██▀███   ▐██▌\n");    
-        printf("▓  ██▒ ▓▒▓██ ▒ ██▒▓██▒▒██▀ ▀█   ██▄█▒    ▒██▒  ██▒▓██ ▒ ██▒   ▓██▒▀█▀ ██▒ ██  ▓██▒▒██▀ ██▌▓█   ▀ ▓██ ▒ ██▒ ▐██▌    \n");
-        printf("▒ ▓██░ ▒░▓██ ░▄█ ▒▒██▒▒▓█    ▄ ▓███▄░    ▒██░  ██▒▓██ ░▄█ ▒   ▓██    ▓██░▓██  ▒██░░██   █▌▒███   ▓██ ░▄█ ▒ ▐██▌    \n");
-        printf("░ ▓██▓ ░ ▒██▀▀█▄  ░██░▒▓▓▄ ▄██▒▓██ █▄    ▒██   ██░▒██▀▀█▄     ▒██    ▒██ ▓▓█  ░██░░▓█▄   ▌▒▓█  ▄ ▒██▀▀█▄   ▓██▒    \n");
-        printf("  ▒██▒ ░ ░██▓ ▒██▒░██░▒ ▓███▀ ░▒██▒ █▄   ░ ████▓▒░░██▓ ▒██▒   ▒██▒   ░██▒▒▒█████▓ ░▒████▓ ░▒████▒░██▓ ▒██▒ ▒▄▄    \n"); 
-        printf("  ▒ ░░   ░ ▒▓ ░▒▓░░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒   ░ ▒░▒░▒░ ░ ▒▓ ░▒▓░   ░ ▒░   ░  ░░▒▓▒ ▒ ▒  ▒▒▓  ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░ ░▀▀▒    \n");
-        printf("    ░      ░▒ ░ ▒░ ▒ ░  ░  ▒   ░ ░▒ ▒░     ░ ▒ ▒░   ░▒ ░ ▒░   ░  ░      ░░░▒░ ░ ░  ░ ▒  ▒  ░ ░  ░  ░▒ ░ ▒░ ░  ░   \n"); 
-        printf("  ░        ░░   ░  ▒ ░░        ░ ░░ ░    ░ ░ ░ ▒    ░░   ░    ░      ░    ░░░ ░ ░  ░ ░  ░    ░     ░░   ░     ░   \n"); 
-        printf("            ░      ░  ░ ░      ░  ░          ░ ░     ░               ░      ░        ░       ░  ░   ░      ░      \n"); 
-        printf("                      ░                                                            ░                               \n\n\n");
-
-
-        printf("███████ ████████  █████  ██████  ████████      ██ ██████  ██    ██ ███████ ██   ██     ███████ ██              \n");                                 
-        printf("██         ██    ██   ██ ██   ██    ██        ██  ██   ██ ██    ██ ██      ██   ██     ██       ██ \n");                                             
-        printf("███████    ██    ███████ ██████     ██        ██  ██████  ██    ██ ███████ ███████     ███████  ██ \n");                                             
-        printf("     ██    ██    ██   ██ ██   ██    ██        ██  ██      ██    ██      ██ ██   ██          ██  ██  \n");                                            
-        printf("███████    ██    ██   ██ ██   ██    ██         ██ ██       ██████  ███████ ██   ██     ███████ ██  \n");                                             
-        printf("                                                                                                  \n\n\n");                                              
-                                                                                                                                                        
-        printf("██████  ██    ██ ██      ███████      ██ ██████  ██    ██ ███████ ██   ██     ██████  ██   \n");                                                     
-        printf("██   ██ ██    ██ ██      ██          ██  ██   ██ ██    ██ ██      ██   ██     ██   ██  ██  \n");                                                     
-        printf("██████  ██    ██ ██      █████       ██  ██████  ██    ██ ███████ ███████     ██████   ██  \n");                                                     
-        printf("██   ██ ██    ██ ██      ██          ██  ██      ██    ██      ██ ██   ██     ██   ██  ██  \n");                                                     
-        printf("██   ██  ██████  ███████ ███████      ██ ██       ██████  ███████ ██   ██     ██   ██ ██    \n");                                                    
-        printf("                                                                                          \n\n\n");                                                      
-                                                                                                                                                        
-        printf("███████ ██   ██ ██ ████████      ██ ██████  ██    ██ ███████ ██   ██     ███████ ██ \n");                                                            
-        printf("██       ██ ██  ██    ██        ██  ██   ██ ██    ██ ██      ██   ██     ██       ██  \n");                                                          
-        printf("█████     ███   ██    ██        ██  ██████  ██    ██ ███████ ███████     █████    ██  \n");                                                          
-        printf("██       ██ ██  ██    ██        ██  ██      ██    ██      ██ ██   ██     ██       ██      \n");                                                      
-        printf("███████ ██   ██ ██    ██         ██ ██       ██████  ███████ ██   ██     ███████ ██  \n\n\n");
-
+        printf(" ______  ____   ____     __  __  _       ___   ____       ___ ___  __ __  ____   ___      ___  ____ ");
+        printf("|      T|    \\ l    j   /  ]|  l/ ]     /   \\ |    \\     |   T   T|  T  T|    \\ |   \\    /  _]|    \\");
+        printf("|      ||  D  ) |  T   /  / |  ' /     Y     Y|  D  )    | _   _ ||  |  ||  D  )|    \\  /  [_ |  D  )");
+        printf("l_j  l_j|    /  |  |  /  /  |    \\     |  O  ||    /     |  \\_/  ||  |  ||    / |  D  YY    _]|    / ");
+        printf("  |  |  |    \\  |  | /   \\_ |     Y    |     ||    \\     |   |   ||  :  ||    \\ |     ||   [_ |    \\ ");
+        printf("  |  |  |  .  Y j  l \\     ||  .  |    l     !|  .  Y    |   |   |l     ||  .  Y|     ||     T|  .  Y");
+        printf("  l__j  l__j\\_j|____j \\____jl__j\\_j     \\___/ l__j\\_j    l___j___j \\__,_jl__j\\_jl_____jl_____jl__j\\_j");
         printf("*원하시는 게임 선택지를 입력해주세요 : _\b");
         scanf("%c", &choice); //사용자 입력받기
         if (choice == 's' || choice == 'S')//s를 입력한다면
             return 0; //메뉴나가기}
-        else if (choice == 'r' || choice == 'R') //r을 입력한다면
+        else if (choice == 'r' || choice == 'R') {//r을 입력한다면
             game_rule(); //rule 불러오기
+            system("cls");
+        }
         else if (choice == 'e' || choice == 'E') //e를 입력한다면
             exit(1); //나가기
         else printf("잘못된 문자를 입력하셨습니다.");
@@ -150,45 +125,49 @@ void game_story(int stage)
         printf("...\n");
         Sleep(2000);
         printf("(바닥에 떨어진 전단지를 발견한다)\n");
-        Sleep(1000);
+        Sleep(2000);
         printf("[할로윈 기념 파티에 당신을 초대합니다!]\n");
         printf("[진정한 귀신들만이 올 수 있는 특별한 파티]\n");
         printf("[한껏 꾸미고 아름다운 모습을 기대하겠습니다]\n");
         printf("[위치: @@시@@동 @@#$ 저택 지하 1층]\n");
-        Sleep(1000);
+        Sleep(7000);
         printf("(흥미가 생긴 주인공은 가기로 결정한다.)\n");
-        Sleep(1000);
+        Sleep(2500);
         printf("...\n");
         Sleep(1000);
         printf("...\n");
         Sleep(1000);
         printf("...\n");
         Sleep(1000);
-        printf("귀신분장을 하고 도착한 주인공은 대저택 정문 앞에서\n ");
+        printf("귀신분장을 하고 도착한 주인공은 대저택 정문 앞에서\n");
+        Sleep(2000);
         printf("마찬가지로 귀신 분장을 한 사람에게 안내를 받아 파티장에 도착하였다.\n");
-        Sleep(1000);
+        Sleep(2000);
         printf("생각보다 많은 인원에 놀란 한편 주인공은 이상한 점을 발견한다.\n");
-        Sleep(1000);
+        Sleep(2000);
         printf("...\n");
         Sleep(1000);
         printf("기괴할 정도로 조용하고 스산한 분위기\n");
-        Sleep(1000);
+        Sleep(4000);
         printf("...\n");
         Sleep(1000);
         printf("그리고 흐린 발끝\n");
-        Sleep(1000);
+        Sleep(2000);
         printf("...\n");
         Sleep(1000);
         printf("주인공은 상황을 인지하지 못하다가 한 호박 귀신이 쫓아오는 것을 발견하곤 곧바로 자신이 왔던 문으로 뛰어간다.\n");
+        Sleep(4000);
+        printf("아무버튼이나 눌러 진행하세요");
+        getch();
         break;
         case 2:
         printf("미로에서 도망치다 보니 계단이 보인다.\n");
         printf("지상으로 올라가는 길\n");
-        Sleep(1000);
+        Sleep(3200);
         printf("...\n");
         Sleep(1000);
         printf("주인공은 힘차게 올라갔지만 다시 보이는 미로에 암담하다...\n");
-        Sleep(1000);
+        Sleep(2000);
         printf("2 Stage Start\n");
         printf("(열쇠를 찾아야 탈출구로 나갈 수 있습니다!)\n");
         printf("계속하려면 아무키나 누르세요...");
@@ -196,15 +175,15 @@ void game_story(int stage)
         break;
         case 3:
         printf("열쇠로 급히 문을 열고 드디어 밖으로 나온 주인공\n");
-        Sleep(1000);
+        Sleep(2500);
         printf("밖은 이미 어두워졌고 문 옆엔 아까 자신을 안내해준 귀신을 발견하였다.\n");
-        Sleep(1000);
+        Sleep(2500);
         printf("무표정한 얼굴로 다가오는 그들을 따돌리며 황급히 자신의 집으로 도망간다.\n");
-        Sleep(1000);
+        Sleep(2500);
         printf("다행히 어느 순간부터 그들은 따라오지 않고 노려보기만 하였고,\n");
-        Sleep(1000);
+        Sleep(2500);
         printf("나중에 경찰에 신고하고 찾아간 그곳에는 아무것도 찾을 수 없었다...\n");
-        Sleep(1000);
+        Sleep(2500);
         printf("...\n");
         Sleep(1000);
         printf("...\n");
@@ -215,8 +194,7 @@ void game_story(int stage)
 	}
 
 //게임 종료 조건
-bool clear(int stage, int playing) {
-    playing = 0;
+bool clear(int stage) {
     switch (stage) {
     case 1:
         if (p_x == g_x && p_y == g_y) { //팩맨과 고스트의 위치가 같아진다면
@@ -239,24 +217,6 @@ bool clear(int stage, int playing) {
         return 0;
     }
 }
-//시야 제한 ->코딩 후 문제점이 발생하면 그래픽 함수 사용
-void display(int x, int y) {
-    for (int i = x - 2; i <= x + 2; i++) {
-        for (int j = y - 2; j <= y + 2; j++) {
-            if (i >= 0 && i < ROW && j >= 0 && j < COL) { // 미로 범위 내에서만 출력
-                if (i == x && j == y) {
-                    printf("@"); //현재 위치 임의
-                }
-                // else if (maze_str[i][j] == WALL) { //벽이랑 만났을때를 어떻게 해야할 지 모르겠음
-                //     printf("■"); //벽
-                }
-                else { // 길은 공백으로 표시
-                    printf(" ");
-                }
-            }
-        }
-        printf("\n"); // 한 줄 출력 후 개행
-    }
 
 void showAndHideText(char* text) { //보여주고 사라지는 텍스트
     gotoxy(t_x, t_y);
@@ -282,9 +242,4 @@ void gotoxy(int x, int y) { //텍스트 출력 위치를 바꾸는 함수
 void setConsoleColor(int colorCode) { //글씨의 색깔을 바꾸는 함수
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, colorCode);
-}
-
-// 주어진 좌표의 셀이 벽인지 아닌지 확인 (블록체크)
-int is_block(int x, int y) {
-    return maze[x][y] == 1;
 }
